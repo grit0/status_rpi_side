@@ -5,6 +5,9 @@ config = {
 	"authDomain": "pi-grit.firebaseapp.com",
 	"databaseURL": "https://pi-grit.firebaseio.com",
 	"projectId": "pi-grit",
+    	"storageBucket": "pi-grit.appspot.com",
+   	" messagingSenderId": "1091509710648"
+
 }                                                                                                                                                                                              
 firebase = pyrebase.initialize_app(config)                                                                                                                                                     
 auth = firebase.auth()
