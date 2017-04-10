@@ -17,6 +17,7 @@ if [ "$(python3 -c "import pyrebase" 2>&1)" != "" 2>&1 ]; then
 fi
 echo "You have pyrebase module"
 git clone https://github.com/grit0/status_rpi_side.git status_app
+sudo echo 'alias status="python3 ~/status_app/menu.py'>> ~/.profile
 cd status_app
 #----start cron----
 crontab -l > status_cron
