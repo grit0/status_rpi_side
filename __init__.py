@@ -21,19 +21,19 @@ with open ("config","r") as file:
 	uid=file.read()
 if checknet.is_connected() and uid is not '' :
 	print("==========Online===========")
-        
-	db.child("users").child(uid).child("status").update(status.getStatus())
+	#db.child("users").child(uid).child("status").update(status.getStatus())
 	#firebase.sendToFirebase(status.getStatus())
-#	try:
+	try:
 
-		#db.child("users").child(uid).child("status").update(status.getStatus())
+            while(checknet.is_connected()):
+                    db.child("users").child(uid).child("status").update(status.getStatus())
 		#print("Debug")
 		#time.sleep(5)
 		#print("Debug2")
 		#status.runCommand()
-                #db.child("users").child(uid).child("status").update(status.getStatus())
-#	except :
-#		print("Not found uid")
+		#db.child("users").child(uid).child("status").update(status.getStatus())
+	except :
+		print("Not found uid")
 else:
 	print("==========Offline===========")
 	server = socket.socket()         

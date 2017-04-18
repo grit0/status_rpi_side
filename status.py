@@ -1,6 +1,7 @@
-import copy
+import time
 import io,json
 import subprocess
+import copy
 status={
 "basic":{
 		"hostname" : "hostname -b",
@@ -48,24 +49,19 @@ status={
                 "gpio":r"""gpio readall |tr -d " "|awk -F"|" 'NR >= 4 && NR <=23 {print $7"|"$6"|"$5"-"$9"|"$10"|"$11"-"}'""" 
 }
 }
-			
 #print(commands.getoutput(basic["Date"]))
-
 #for key, value in status["basic"].items():
 #	status["basic"][key]=commands.getoutput(status["basic"][key])
-#print(basic)
+#print(bGasic)
 
 #for key, value in status["network"]["eth0"].items():
-#	status["network"]["eth0"][key]=commands.getoutputu/status["network"]["eth0"][key])
+#	status["network"]["eth0"][key]=commands.getoutput(status["network"]["eth0"][key])
 
 #status={basic,network}
 def check_pin(pin,type):                                                                                                                                                                                                             
         GPIO.setmode(GPIO.BOARD)                                                                                                                                                                                                
         GPIO.setup(pin,type)                                                                                                                                                                                               
-def check_pin(pin,type):                                                                                                                                               $
-        GPIO.setmode(GPIO.BOARD)                                                                                                                                       $
-        GPIO.setup(pin,type)                                                                                                                                           $
-        return GPIO.input(pin)
+        return GPIO.input(pin) 
 
 def split_usb(text):
     dic_usb={}
@@ -83,59 +79,47 @@ def split_gpio(text):
         dicGpioDetail["mode"]=listGpioDetail[2]
         dic_gpio[x+1]=dicGpioDetail
     return dic_gpio
-#result=status.copy()
-print(status)
-print("\n\n")
-re={}
+
 def runCommand(dic):
-        for key, value in dic.items():
-                if isinstance(value,dict):
-                        runCommand(value)
-                else:
-                        re[key]=subprocess.getoutput(value)
-                        if dic[key] == '' :
-                                print("a")
-                        #print(value)
-                        if key is "usb" :
-                               re[key]=split_usb(re[key])
-                        if key is "gpio" :
-
-
-^G Get Help                 ^O WriteOut                 ^R Read File                ^Y Prev Page                ^K Cut Text                 ^C Cur Pos
-^X Exit                     ^J Justify                   return GPIO.input(pin) 
-
-def split_usb(text):
-    dic_usb={}
-    for usb in text.split('\n'):
-        dic_usb[usb[:3]]=usb[3:usb.find("\n")]
-    return dic_usb
-
-def split_gpio(text):
-    dic_gpio={}
-    text=text.replace("\n","").split('-')#delete '\n' from '1||-2||-\n3|1|ALT0-4||-\n5|1|ALT0-6'
-    for x in range(0,40):#['1||', '2||', '3|1|ALT0', '4||', '5|1|ALT0', '6']
-        dicGpioDetail={}
-        listGpioDetail=text[x].split('|')
-        dicGpioDetail["value"]=listGpioDetail[1]
-        dicGpioDetail["mode"]=listGpioDetail[2]
-        dic_gpio[x+1]=dicGpioDetail
-    return dic_gpio
-#result=status.copy()
-print(status)
-print("\n\n")
-re={}
-def runCommand(dic):	
 	for key, value in dic.items():
-		if isinstance(value,dict):
+		if isinstance(value, dict):
 			runCommand(value)      
 		else:
-			re[key]=subprocess.getoutput(value)
-                        if dic[key] == '' :
-				print("a")
+			#dic[key]=commands.getoutput(value)
+			dic[key]=subprocess.getoutput(value)
+			if dic[key] == '' : # Debug cdicate empty obj in usb
+				continue
 			#print(value)
 			if key is "usb" :
-			       re[key]=split_usb(re[key])
+				dic[key]=split_usb(dic[key])
 			if key is "gpio" :
+                                dic[key]=split_gpio(dic[key]) 
+                        
 
-                               re[key]=split_gpio(re[key]) 
+
+
+#print(status)
+#print("\n",re,">>>>>>>>>>>>")
+#time.sleep(5)
+#runCommand(re)
+#print("\n\n\n<<<<<<<<<<<<<",re)
+#print(status)
+def getStatus():
+    total={}
+    re={}
+    re=copy.deepcopy(status)
+    runCommand(re)
+    mac_connect=[]
+    for x in ['eth0','lo','wlan0']:
+        result=re['network'][x]['mac']
+        if  result.find("not found")<0 and result != "":
+            mac_connect.append(result)
+    
+    total={mac_connect[0]:re}
+    return total
+#print(getStatus())
+#print("/n---",status)
+#print("\n",re)
+#time.sleep(5)
+#print("\n\n",getStatus())
 
