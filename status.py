@@ -1,6 +1,8 @@
 import time
 import io,json
 import subprocess
+import requests
+import json
 import copy
 status={
 "basic":{ "hostname" : "hostname -b",
@@ -59,6 +61,13 @@ status={
 #	status["network"]["eth0"][key]=commands.getoutput(status["network"]["eth0"][key])
 
 #status={basic,network}
+def add_geo(current_status):
+    geo_url='http://freegeoip.net/json'
+    geo_request = requests.get(geo_url)
+    json_request =  json.loads(geo_request.text)
+    current_status['geo']=json_request
+    return current_status
+
 def check_pin(pin,type):                                                                                                                                                                                                             
         GPIO.setmode(GPIO.BOARD)                                                                                                                                                                                                
         GPIO.setup(pin,type)                                                                                                                                                                                               
@@ -111,6 +120,7 @@ def getStatus():
     re=copy.deepcopy(status)
     runCommand(re)
     mac_connect=[]
+    add_geo(re)
     for x in ['eth0','lo','wlan0']:
         result=re['network'][x]['mac']
         if  result.find("not found")<0 and result != "":
