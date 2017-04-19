@@ -21,7 +21,8 @@ sudo echo 'alias status="python3 ~/status_app/menu.py"'>> ~/.profile
 cd status_app
 #----start cron----
 crontab -l > status_cron
-echo "* * * * * python3 ~/status_app/__init__.py" >> status_cron
+#echo "* * * * * python3 ~/status_app/__init__.py" >> status_cron
+@reboot python3 ~/status_app/__init__.py" >> status_cron
 crontab status_cron
 rm status_cron
 
