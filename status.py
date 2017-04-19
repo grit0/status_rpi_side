@@ -3,8 +3,7 @@ import io,json
 import subprocess
 import copy
 status={
-"basic":{
-		"hostname" : "hostname -b",
+"basic":{ "hostname" : "hostname -b",
 		"distro_name":"uname -s",
 		"kernel_version":"uname -v",
 		"date":"date",
@@ -21,6 +20,8 @@ status={
 				"bcast"  : "/sbin/ifconfig "+x+" | grep 'inet addr:' | cut -d: -f3 | awk '{ print $1}'",
 				"sub" : "/sbin/ifconfig "+x+" | grep 'inet addr:' | cut -d: -f4 | awk '{ print $1}'",
 				"mac"		 :"/sbin/ifconfig "+x+" | grep 'HWaddr' | tr -s ' ' |cut -d' ' -f5",
+                                "inet6_global" : "/sbin/ifconfig eth | grep -oP '(?<=addr: ).*?(?=Scope:Global)'",
+                                "inet6_link" : "/sbin/ifconfig eth | grep -oP '(?<=addr: ).*?(?=Scope:Link)'",
 				"rx_packet"  :"/sbin/ifconfig "+x+" | grep 'RX packet' | cut -d: -f2 | awk '{ print $1}'",
 				"tx_packet"  :"/sbin/ifconfig "+x+" | grep 'TX packet' | cut -d: -f2 | awk '{ print $1}'",
 				"rx_bytes"   :"/sbin/ifconfig "+x+" | grep 'RX bytes' | cut -d: -f2 | awk '{ print $1$2$3}'",
