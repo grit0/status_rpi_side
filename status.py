@@ -1,4 +1,5 @@
 import time
+import checknet
 import io,json
 import subprocess
 import requests
@@ -120,7 +121,8 @@ def getStatus():
     re=copy.deepcopy(status)
     runCommand(re)
     mac_connect=[]
-    add_geo(re)
+    if checknet.is_connected():
+        add_geo(re)
     for x in ['eth0','lo','wlan0']:
         result=re['network'][x]['mac']
         if  result.find("not found")<0 and result != "":
