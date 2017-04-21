@@ -44,7 +44,19 @@ status={
 			"user":"df -h |grep 'root' | tr -s ' '|cut -d ' ' -f5 | sed 's/.$//'"
 		},
 		"cpu":{"current":"cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq",
-			"max":"cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
+			"max":"cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+			"CPU usage": {"us":'top -bn1 | grep "Cpu(s)" | cut -d " " -f3',
+					"sy":'top -bn1 | grep "Cpu(s)" | cut -d " " -f6',
+				"ni":'top -bn1 | grep "Cpu(s)" | cut -d " " -f9',
+				"id":'top -bn1 | grep "Cpu(s)" | cut -d " " -f11',
+				"wa":'top -bn1 | grep "Cpu(s)" | cut -d " " -f14',
+				"hi":'top -bn1 | grep "Cpu(s)" | cut -d " " -f17',
+				"si":'top -bn1 | grep "Cpu(s)" | cut -d " " -f20',
+				"st":'top -bn1 | grep "Cpu(s)" | cut -d " " -f23'},
+			"Task":{"running":'top -bn1 | grep "Task" | cut -d " " -f6',
+				"sleeping":'top -bn1 | grep "Task" | cut -d " " -f8',
+				"stopped":'top -bn1 | grep "Task" | cut -d " " -f12',
+				"zombie":'top -bn1 | grep "Task" | cut -d " " -f16'}
 		}
 },"peripheral":{
 		"hdmi":"tvservice -n",
