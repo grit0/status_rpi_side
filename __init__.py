@@ -5,6 +5,7 @@ import subprocess
 import time
 from threading import Thread
 from  firebase import db
+import os.path
 #from multiprocessing import Process
 #print(status.getStatus())
 #if __name__=='__main__':
@@ -17,7 +18,9 @@ from  firebase import db
 	#print("send Finish")
 #while(True):
 	#firebase.sendToFirebase(status.getStatus())
-with open ("config","r") as file:
+scriptpath = os.path.dirname(__file__)
+filename = os.path.join(scriptpath, 'config')
+with open (filename,"r") as file:
 	uid=file.read()
 while True :
 	if checknet.is_connected() and uid is not '' :
