@@ -6,18 +6,6 @@ import time
 from threading import Thread
 from  firebase import db
 import os.path
-#from multiprocessing import Process
-#print(status.getStatus())
-#if __name__=='__main__':
-#	a1=Process(firebase.sendToFirebase(status.getStatus()))
-#	a2=Process(firebase.sendToFirebase(status.getStatus()))
-#	a1.start()
-#	a2.start()
-#	a1.join()
-#	a2.join()
-	#print("send Finish")
-#while(True):
-	#firebase.sendToFirebase(status.getStatus())
 scriptpath = os.path.dirname(__file__)
 filename = os.path.join(scriptpath, 'config')
 with open (filename,"r") as file:
