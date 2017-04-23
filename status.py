@@ -41,7 +41,7 @@ status={
 		"harddisk":{"size":"df -h |grep 'root' | tr -s ' '|cut -d ' ' -f2 | sed 's/.$//'",
 			"used":"df -h |grep 'root' | tr -s ' '|cut -d ' ' -f3 | sed 's/.$//'",
 			"avail":"df -h |grep 'root' | tr -s ' '|cut -d ' ' -f4 | sed 's/.$//'",
-			"use%":"df -h |grep 'root' | tr -s ' '|cut -d ' ' -f5 | sed 's/.$//'"
+			"use_percent":"df -h |grep 'root' | tr -s ' '|cut -d ' ' -f5 | sed 's/.$//'"
 		},
 		"cpu":{"current":"cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq",
 			"max":"cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
