@@ -35,7 +35,7 @@ status={
 			"used":"free -m  | grep 'Mem' | tr -s ' ' |cut -d' ' -f3",
 			"free":"free -m  | grep 'Mem' | tr -s ' ' |cut -d' ' -f4",
 			"shared":"free -m  | grep 'Mem' | tr -s ' ' |cut -d' ' -f5",
-			"buffefs":"free -m  | grep 'Mem' | tr -s ' ' |cut -d' ' -f6",
+			"buffers":"free -m  | grep 'Mem' | tr -s ' ' |cut -d' ' -f6",
 			"cached":"free -m  | grep 'Mem' | tr -s ' ' |cut -d' ' -f7"
 		},
 		"harddisk":{"size":"df -h |grep 'root' | tr -s ' '|cut -d ' ' -f2 | sed 's/.$//'",

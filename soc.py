@@ -5,8 +5,8 @@ import json
 @asyncio.coroutine
 def hello(websocket, path):
 	yield from websocket.send(json.dumps(status.getStatus()))
-#    name = yield from websocket.recv()
-#    print("< {}".format(name))
+	name = yield from websocket.recv()
+	print("< {}".format(name))
 #    greeting = "Hello {}!".format(name)
 #yield from websocket.send("greeting")
 #    print("> {}".format(greeting))
