@@ -113,7 +113,10 @@ def runCommand(dic):
 			if dic[key] == '' : # Debug cdicate empty obj in usb
 				continue
 			if dic[key].replace('.','',1).isdigit() :
-				dic[key]=float(dic[key])
+				try:
+					dic[key]=int(dic[key])
+				except ValueError:
+					dic[key]=float(dic[key])
 			#print(value)
 			if key is "usb" :
 				dic[key]=split_usb(dic[key])
@@ -144,7 +147,7 @@ def getStatus():
     
     total={mac_connect[0]:re}
     return total
-print(getStatus())
+#print(getStatus())
 #print("/n---",status)
 #print("\n",re)
 #time.sleep(5)
