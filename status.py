@@ -62,7 +62,7 @@ status={
 		"hdmi":"tvservice -n",
 		"camera":"vcgencmd get_camera | grep -o '.$'",
 		"usb":"lsusb |tr -d ':'| awk '$4 > 3 { print $4$7$8$9$10}'",
-                "gpio":r"""gpio readall |tr -d " "|awk -F"|" 'NR >= 4 && NR <=23 {print $7"|"$6"|"$5"-"$9"|"$10"|"$11"-"}'""" 
+                "gpio":r"""gpio readall |tr -d " "|awk -F"|" 'NR >= 4 && NR <=23 {print $7"|"$6"|"$5"|"$4"|"$3"|"$2"-"$9"|"$10"|"$11"|"$12"|"$13"|"$14"-"}'""" 
 }
 }
 #print(commands.getoutput(basic["Date"]))
@@ -98,8 +98,13 @@ def split_gpio(text):
     for x in range(0,40):#['1||', '2||', '3|1|ALT0', '4||', '5|1|ALT0', '6']
         dicGpioDetail={}
         listGpioDetail=text[x].split('|')
+        dicGpioDetail["pin"]=listGpioDetail[0]
         dicGpioDetail["value"]=listGpioDetail[1]
-        dicGpioDetail["mode"]=listGpioDetail[2]
+        #dicGpioDetail["modeIN"]=True if listGpioDetail[2] == "IN" else False if listGpioDetail == "OUT" else ""
+        dicGpioDetail["modeIN"]=listGpioDetail[2]
+        dicGpioDetail["name"]=listGpioDetail[3]
+        dicGpioDetail["wPi"]=listGpioDetail[4]
+        dicGpioDetail["BCM"]=listGpioDetail[5]
         dic_gpio[x+1]=dicGpioDetail
     return dic_gpio
 
