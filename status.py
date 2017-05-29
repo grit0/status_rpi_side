@@ -99,9 +99,10 @@ def split_gpio(text):
         dicGpioDetail={}
         listGpioDetail=text[x].split('|')
         dicGpioDetail["pin"]=listGpioDetail[0]
-        dicGpioDetail["value"]=listGpioDetail[1]
-        #dicGpioDetail["modeIN"]=True if listGpioDetail[2] == "IN" else False if listGpioDetail == "OUT" else ""
-        dicGpioDetail["modeIN"]=listGpioDetail[2]
+        dicGpioDetail["value"]=True if listGpioDetail[1] == "1" else False 
+        #dicGpioDetail["value"]=listGpioDetail[1]
+        dicGpioDetail["modeIN"]=True if listGpioDetail[2] == "IN" else False
+        #dicGpioDetail["modeIN"]=listGpioDetail[2]
         dicGpioDetail["name"]=listGpioDetail[3]
         dicGpioDetail["wPi"]=listGpioDetail[4]
         dicGpioDetail["BCM"]=listGpioDetail[5]
@@ -112,10 +113,9 @@ def runCommand(dic):
 	for key, value in dic.items():
 		if isinstance(value, dict):
 			runCommand(value)      
-		else:
-			#dic[key]=commands.getoutput(value)
+		else :
 			dic[key]=subprocess.getoutput(value)
-			if dic[key] == '' : # Debug cdicate empty obj in usb
+			if dic[key] == '' : # Debug dic empty obj in usb
 				continue
 			if dic[key].replace('.','',1).isdigit() :
 				try:
@@ -142,6 +142,8 @@ def getStatus():
     re={}
     re=copy.deepcopy(status)
     runCommand(re)
+    re['shutdown']=0
+    re['command']="-"
     mac_connect=[]
     if checknet.is_connected():
         add_geo(re)

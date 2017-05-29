@@ -20,15 +20,29 @@ if shutdown is not None and shutdown==1:
 #	print(i,"--> mode: ",pin['mode'],"   value: ",pin['value'])
 #	if pin['mode'] in 
 GPIO.setmode(GPIO.BOARD)
-pin=db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(24).get().val()
+
+#pin=db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(24).get().val()
+gpio_firebase=db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(24)
+#print(pi.child("value").get().val())
+print(gpio_firebase.get().val())
+#print("pin : ",db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(24).child("name").get().val())
+#print("va : ",db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(24).child("value").get().val())
 try:
-	if pin['mode'] == "IN":
-		print("in")
-		GPIO.setup(24, GPIO.IN)
-	if pin['mode'] == "OUT":
-        	GPIO.setup(24, GPIO.OUT)
+	for i in range(37) :
+		print(i,db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(i).child("modeIN").get().val())
+		if not db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(i).child("modeIN").get().val():			
+			GPIO.setup(i,GPIO.OUT)
+		#GPIO.output(24,True)
+			GPIO.setwarnings(False) 
+			#GPIO.output(24,db.child("users").child(uid).child("status").child(myMac).child("peripheral/gpio").child(i).child("value").get().val()) 		
+#	if pin['mode'] == "IN":
+#		print("in")
+#		GPIO.setup(24, GPIO.IN)
+#	if pin['mode'] == "OUT":
+#        	GPIO.setup(24, GPIO.OUT)
 except:
 	print("error")
+
 #if pin['value'] == "1":
 #        GPIO.output(24, GPIO.HIGH)
 #if pin['value'] == "0":
