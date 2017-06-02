@@ -5,6 +5,9 @@ import subprocess
 import requests
 import json
 import copy
+import picamera
+
+
 status={
 "basic":{ "hostname" : "hostname -b",
 		"distro_name":"uname -s",
@@ -13,7 +16,9 @@ status={
 		"machine":"uname -m",
 		"voltage":"vcgencmd measure_volts core |cut -c6-| sed 's/.$//'",
 		"temperature":"vcgencmd measure_temp|cut -c6-| sed 's/..$//'",
-		"firmware_version":"/opt/vc/bin/vcgencmd version"
+		"firmware_version":"/opt/vc/bin/vcgencmd version",
+		"user":"who | wc -l",
+		"last_boot":"""last | tail -n 3 | head -1 | awk '{print $5" "$6" "$7" "$8" "$9" "$10}'"""
 
 },"network":{
                                                                                                                                                                         
@@ -53,7 +58,7 @@ status={
 				"hi":'top -bn1 | grep "Cpu(s)" |tr -s " "| cut -d " " -f12',
 				"si":'top -bn1 | grep "Cpu(s)" |tr -s " "| cut -d " " -f14',
 				"st":'top -bn1 | grep "Cpu(s)" |tr -s " "| cut -d " " -f16'},
-			"Task":{"running":'top -bn1 | grep "Task" | cut -d " " -f6',
+			"task":{"running":'top -bn1 | grep "Task" | cut -d " " -f6',
 				"sleeping":'top -bn1 | grep "Task" | cut -d " " -f8',
 				"stopped":'top -bn1 | grep "Task" | cut -d " " -f12',
 				"zombie":'top -bn1 | grep "Task" | cut -d " " -f16'}
@@ -80,6 +85,12 @@ def add_geo(current_status):
     json_request =  json.loads(geo_request.text)
     current_status['geo']=json_request
     return current_status
+def check_csi():
+    try:
+        camera = picamera.PiCamera()
+        return True
+    except:
+        return False
 
 def check_pin(pin,type):                                                                                                                                                                                                             
         GPIO.setmode(GPIO.BOARD)                                                                                                                                                                                                
