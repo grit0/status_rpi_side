@@ -22,7 +22,8 @@ while True :
 			command=db.child("users").child(uid).child("status").child(myMac).child("command").get().val()
 			shutdown=db.child("users").child(uid).child("status").child(myMac).child("shutdown").get().val()
 			print(command," ",shutdown)
-			if command is not None and command=="-":
+			if command is not None and command!="-":
+				subprocess.getoutput(command)
 				#print(subprocess.getoutput(command))
 				result=subprocess.getoutput(command)
 				db.child("users").child(uid).child("status").child(myMac).child("result_command").set(result)

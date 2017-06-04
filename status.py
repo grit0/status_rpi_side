@@ -32,8 +32,8 @@ status={
                                 "inet6_link" : "/sbin/ifconfig eth | grep -oP '(?<=addr: ).*?(?=Scope:Link)'",
 				"rx_packet"  :"/sbin/ifconfig "+x+" | grep 'RX packet' | cut -d: -f2 | awk '{ print $1}'",
 				"tx_packet"  :"/sbin/ifconfig "+x+" | grep 'TX packet' | cut -d: -f2 | awk '{ print $1}'",
-				"rx_bytes"   :"/sbin/ifconfig "+x+" | grep 'RX bytes' | cut -d: -f2 | awk '{ print $1$2$3}'",
-				"tx_bytes"	 :"/sbin/ifconfig "+x+" | grep 'TX bytes' | cut -d: -f3 | awk '{ print $1$2$3}'"
+				"rx_bytes"   :"/sbin/ifconfig "+x+" | grep 'RX bytes' | cut -d: -f2 | awk '{ print $1$2$3}'|cut -d'(' -f1",
+				"tx_bytes"	 :"/sbin/ifconfig "+x+" | grep 'TX bytes' | cut -d: -f3 | awk '{ print $1$2$3}'|cut -d'(' -f1"
 				} for x in ("eth0","lo","wlan0")
 },"physical":{
 		"ram":{"total":"free -m  | grep 'Mem' | tr -s ' ' |cut -d' ' -f2",
@@ -155,6 +155,7 @@ def getStatus():
     runCommand(re)
     re['shutdown']=0
     re['command']="-"
+    #re['result']="-"
     mac_connect=[]
     if checknet.is_connected():
         add_geo(re)
