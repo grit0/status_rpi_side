@@ -164,11 +164,11 @@ def getStatus():
         file.seek(0)
         file.write(str(re['network']['eth0']['tx_bytes'])+":"+str(re['network']['eth0']['rx_bytes']))
         file.truncate()    
-    print(list_file)
+    #print(list_file)
     send=abs(int(list_file[0])-re['network']['eth0']['tx_bytes'])/1000 
     recieve=abs(int(list_file[1])-re['network']['eth0']['rx_bytes'])/1000           
-    print(list_file[0],"-",re['network']['eth0']['tx_bytes'],"=",send)
-    print(list_file[1],"-",re['network']['eth0']['rx_bytes'],"=",recieve)
+    #print(list_file[0],"-",re['network']['eth0']['tx_bytes'],"=",send)
+    #print(list_file[1],"-",re['network']['eth0']['rx_bytes'],"=",recieve)
     re['network']['eth0']['send']=send
     re['network']['eth0']['recieve']=recieve
     
@@ -180,11 +180,11 @@ def getStatus():
         file.seek(0)
         file.write(str(re['network']['wlan0']['tx_bytes'])+":"+str(re['network']['wlan0']['rx_bytes']))
         file.truncate()
-    print(list_file_wlan)
+    #print(list_file_wlan)
     send_wlan=abs(int(list_file_wlan[0])-re['network']['wlan0']['tx_bytes'])/1000
     recieve_wlan=abs(int(list_file_wlan[1])-re['network']['wlan0']['rx_bytes'])/1000
-    print(list_file_wlan[0],"-",re['network']['wlan0']['tx_bytes'],"=",send_wlan)
-    print(list_file_wlan[1],"-",re['network']['wlan0']['rx_bytes'],"=",recieve_wlan)
+    #print(list_file_wlan[0],"-",re['network']['wlan0']['tx_bytes'],"=",send_wlan)
+    #print(list_file_wlan[1],"-",re['network']['wlan0']['rx_bytes'],"=",recieve_wlan)
     re['network']['wlan0']['send']=send_wlan
     re['network']['wlan0']['recieve']=recieve_wlan
     #re['result']="-"
@@ -198,7 +198,7 @@ def getStatus():
     
     total={mac_connect[0]:re}
     return total
-print(getStatus())
+#print(getStatus())
 #print("/n---",status)
 #print("\n",re)
 #time.sleep(5)
