@@ -13,7 +13,7 @@ filename = os.path.join(scriptpath, 'config')
 with open (filename,"r") as file:
 	uid=file.read()
 while True :
-	if checknet.is_connected():
+	if checknet.is_connected()and uid is not '':
 		print("==========Online===========")
 		tempStatus=status.getStatus()
 		myMac=list(tempStatus.keys())[0]
