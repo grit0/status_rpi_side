@@ -155,6 +155,7 @@ def getStatus():
     runCommand(re)
     re['shutdown']=0
     re['command']="-"
+    #not_wlan="Device not found" in subprocess.getoutput("ifconfig wlan0")
     send=0
     recieve=0
     list_file=[]
@@ -170,6 +171,22 @@ def getStatus():
     print(list_file[1],"-",re['network']['eth0']['rx_bytes'],"=",recieve)
     re['network']['eth0']['send']=send
     re['network']['eth0']['recieve']=recieve
+    
+    send_wlan=0
+    recieve_wlan=0
+    list_file_wlan=[]
+    with open("bw_wlan","r+") as file:
+        list_file_wlan=file.read().replace("\n","").split(":")
+        file.seek(0)
+        file.write(str(re['network']['wlan0']['tx_bytes'])+":"+str(re['network']['wlan0']['rx_bytes']))
+        file.truncate()
+    print(list_file_wlan)
+    send_wlan=abs(int(list_file_wlan[0])-re['network']['wlan0']['tx_bytes'])/1000
+    recieve_wlan=abs(int(list_file_wlan[1])-re['network']['wlan0']['rx_bytes'])/1000
+    print(list_file_wlan[0],"-",re['network']['wlan0']['tx_bytes'],"=",send_wlan)
+    print(list_file_wlan[1],"-",re['network']['wlan0']['rx_bytes'],"=",recieve_wlan)
+    re['network']['wlan0']['send']=send_wlan
+    re['network']['wlan0']['recieve']=recieve_wlan
     #re['result']="-"
     mac_connect=[]
     if checknet.is_connected():
@@ -181,7 +198,7 @@ def getStatus():
     
     total={mac_connect[0]:re}
     return total
-#print(getStatus())
+print(getStatus())
 #print("/n---",status)
 #print("\n",re)
 #time.sleep(5)
