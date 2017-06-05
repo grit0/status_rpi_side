@@ -6,7 +6,7 @@ import requests
 import json
 import copy
 import picamera
-
+import os.path
 
 status={
 "basic":{ "hostname" : "hostname -b",
@@ -140,8 +140,6 @@ def runCommand(dic):
                                 dic[key]=split_gpio(dic[key]) 
                         
 
-
-
 #print(status)
 #print("\n",re,">>>>>>>>>>>>")
 #time.sleep(5)
@@ -149,6 +147,7 @@ def runCommand(dic):
 #print("\n\n\n<<<<<<<<<<<<<",re)
 #print(status)
 def getStatus():
+
     total={}
     re={}
     re=copy.deepcopy(status)
@@ -156,10 +155,13 @@ def getStatus():
     re['shutdown']=0
     re['command']="-"
     #not_wlan="Device not found" in subprocess.getoutput("ifconfig wlan0")
+    scriptpath = os.path.dirname(__file__)
+    filename_bw = os.path.join(scriptpath, 'bw')
+    filename_bw_wlan = os.path.join(scriptpath, 'bw_wlan')
     send=0
     recieve=0
     list_file=[]
-    with open("bw","r+") as file:
+    with open(filename_bw,"r+") as file:
         list_file=file.read().replace("\n","").split(":")
         file.seek(0)
         file.write(str(re['network']['eth0']['tx_bytes'])+":"+str(re['network']['eth0']['rx_bytes']))
@@ -175,7 +177,7 @@ def getStatus():
     send_wlan=0
     recieve_wlan=0
     list_file_wlan=[]
-    with open("bw_wlan","r+") as file:
+    with open(filename_bw_wlan,"r+") as file:
         list_file_wlan=file.read().replace("\n","").split(":")
         file.seek(0)
         file.write(str(re['network']['wlan0']['tx_bytes'])+":"+str(re['network']['wlan0']['rx_bytes']))
