@@ -29,7 +29,7 @@ while True :
 				db.child("users").child(uid).child("status").child(myMac).child("result_command").set(result)
 				print("command : ", command)
 			if shutdown is not None and shutdown==1:
-				#db.child("users").child(uid).child("status").child(myMac).child("shutdown").set(0)
+				db.child("users").child(uid).child("status").child(myMac).child("shutdown").set(0)
 				subprocess.getoutput('sudo shutdown -h now')
 				print("shutdowned")
 			db.child("users").child(uid).child("status").update(tempStatus)
