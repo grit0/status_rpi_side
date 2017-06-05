@@ -155,6 +155,21 @@ def getStatus():
     runCommand(re)
     re['shutdown']=0
     re['command']="-"
+    send=0
+    recieve=0
+    list_file=[]
+    with open("bw","r+") as file:
+        list_file=file.read().replace("\n","").split(":")
+        file.seek(0)
+        file.write(str(re['network']['eth0']['tx_bytes'])+":"+str(re['network']['eth0']['rx_bytes']))
+        file.truncate()    
+    print(list_file)
+    send=abs(int(list_file[0])-re['network']['eth0']['tx_bytes'])/1000 
+    recieve=abs(int(list_file[1])-re['network']['eth0']['rx_bytes'])/1000           
+    print(list_file[0],"-",re['network']['eth0']['tx_bytes'],"=",send)
+    print(list_file[1],"-",re['network']['eth0']['rx_bytes'],"=",recieve)
+    re['network']['eth0']['send']=send
+    re['network']['eth0']['recieve']=recieve
     #re['result']="-"
     mac_connect=[]
     if checknet.is_connected():

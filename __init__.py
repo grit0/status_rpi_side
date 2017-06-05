@@ -13,7 +13,7 @@ filename = os.path.join(scriptpath, 'config')
 with open (filename,"r") as file:
 	uid=file.read()
 while True :
-	if checknet.is_connected() and uid is not '' :
+	if checknet.is_connected():
 		print("==========Online===========")
 		tempStatus=status.getStatus()
 		myMac=list(tempStatus.keys())[0]
@@ -44,6 +44,6 @@ while True :
         		datarecv = yield from websocket.recv()
         		print("< {}".format(datarecv))
 		my_ip=socket.gethostbyname(socket.gethostname())
-		start_server = websockets.serve(transfer,ip, 33333)
+		start_server = websockets.serve(transfer,my_ip, 33333)
 		asyncio.get_event_loop().run_until_complete(start_server)
 		asyncio.get_event_loop().run_forever()
