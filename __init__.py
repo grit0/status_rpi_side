@@ -5,8 +5,6 @@ import subprocess
 import time
 from  firebase import db
 import os.path
-import asyncio
-import websockets
 import json
 scriptpath = os.path.dirname(__file__)
 filename = os.path.join(scriptpath, 'config')
@@ -36,14 +34,3 @@ while True :
 			print("Send status to Firebase finished")
 		except :
 			print("Not found uid")
-	else:
-		print("==========Offline=========")
-		@asyncio.coroutine
-		def transfer(websocket, path):
-        		yield from websocket.send(json.dumps(status.getStatus()))
-        		datarecv = yield from websocket.recv()
-        		print("< {}".format(datarecv))
-		my_ip=socket.gethostbyname(socket.gethostname())
-		start_server = websockets.serve(transfer,my_ip, 33333)
-		asyncio.get_event_loop().run_until_complete(start_server)
-		asyncio.get_event_loop().run_forever()

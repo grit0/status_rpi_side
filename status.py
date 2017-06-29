@@ -187,8 +187,8 @@ def getStatus():
             file.truncate()
         #print(list_file_wlan)
         print(type(re['network']['wlan0']['tx_bytes']))
-        send_wlan=abs(int(list_file_wlan[0])-int(re['network']['wlan0']['tx_bytes']))/1000
-        recieve_wlan=abs(int(list_file_wlan[1])-int(re['network']['wlan0']['rx_bytes']))/1000
+        send_wlan=abs(int(list_file_wlan[0])-re['network']['wlan0']['tx_bytes'])/1000
+        recieve_wlan=abs(int(list_file_wlan[1])-re['network']['wlan0']['rx_bytes'])/1000
         #print(list_file_wlan[0],"-",re['network']['wlan0']['tx_bytes'],"=",send_wlan)
         #print(list_file_wlan[1],"-",re['network']['wlan0']['rx_bytes'],"=",recieve_wlan)
     re['network']['wlan0']['send']=send_wlan
